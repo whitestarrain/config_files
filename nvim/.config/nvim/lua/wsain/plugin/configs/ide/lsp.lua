@@ -797,6 +797,15 @@ local function setupJavaLsp()
   vim.api.nvim_exec_autocmds("FileType", { group = java_cmds, buffer = 0 })
 end
 
+local function setupNixLsp()
+  local lspconfig = require("lspconfig")
+  lspconfig.nil_ls.setup({
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
+  })
+end
+
 local function selectLSP()
   local lspconfig_map = {
     lua = setupLspWrap(setupLuaLsp),
@@ -810,6 +819,7 @@ local function selectLSP()
     jedi = setupLspWrap(setupJedi),
     php = setupLspWrap(setupPhpLsp),
     java = setupLspWrap(setupJavaLsp, false),
+    nix = setupLspWrap(setupNixLsp),
   }
 
   local n = 1
